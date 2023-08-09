@@ -38,7 +38,31 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let deKey = {
+        '10': '.', 
+        '11': '-',
+        '**': 'space'
+    };
+    let list = '';
+    let decodeString = '';
+    for(let i=0; i < expr.length; i+=2) {
+        if(!(i%10)) list += ' ';
+        for(let d in deKey) {
+            if(d == (expr[i] + expr[i+1])) list += deKey[d] 
+        }
+        if(expr[i]+expr[i+1] == '**') {
+            i += 8;
+            list += ' ';
+        }
+    }
+
+    list.split(' ').forEach((word) => {
+        if(word === 'space') decodeString += ' ';
+        for(let key in MORSE_TABLE) {
+            if(key == word) decodeString += MORSE_TABLE[key]
+        }
+    })
+    return decodeString
 }
 
 module.exports = {
